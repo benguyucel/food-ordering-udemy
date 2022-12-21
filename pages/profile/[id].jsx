@@ -13,18 +13,21 @@ const Profile = ({ user }) => {
   const [tabs, setTabs] = useState(0);
   const { push } = useRouter();
 
-  const handleSignOut = () => {
+  const handleSignOut = async() => {
     if (confirm("Are you sure you want to sign out?")) {
-      signOut({ redirect: false });
-      push("/auth/login");
+       const data = await signOut({
+        redirect: false,
+        callbackUrl: "/auth/login",
+      });
+      push(data.url);
     }
   };
 
-  useEffect(() => {
+  /*useEffect(() => {
     if (!session) {
       push("/auth/login");
     }
-  }, [session, push]);
+  }, [session, push]);*/
 
   return (
     <div className="flex px-10 min-h-[calc(100vh_-_433px)] lg:flex-row flex-col lg:mb-0 mb-10">
